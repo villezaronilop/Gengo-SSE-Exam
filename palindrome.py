@@ -36,11 +36,9 @@ class Palindrome():
     def count_cuts(self):
         if self.sample_input:
             self.collection = sorted(self.collection, key=len, reverse=True)
-
             sample_input = self.sample_input
             count = 0
             deducted = []
-            print("Search: ", self.collection)
             for n in self.collection:
                 if n in sample_input:
                     count += 1
