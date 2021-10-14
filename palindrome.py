@@ -4,8 +4,7 @@ class Palindrome():
         self.sample_input = text
         self.collection = []
         if self.sample_input:
-            total_len = len(self.sample_input)
-            collection = self.get_pair(end=total_len)
+            collection = self.get_pair(end=len(self.sample_input))
             self.collection = self.eliminate_non_palindrome(collection)
     
     def get_pair(self, start=0, end=0, collection=[]):
@@ -14,7 +13,7 @@ class Palindrome():
             # tuple
             collection.append((slice_text, slice_text[::-1]))
         if end != 0:
-            collection += self.get_pair(start=0, end=end-1, collection=collection)
+            collection += self.get_pair(end=end-1, collection=collection)
         return collection
 
     def eliminate_non_palindrome(self, collection):
@@ -33,12 +32,28 @@ class Palindrome():
             return max(self.collection, key=len)
         return None
 
-    def level_three(self):
-        pass
-    
+    # level 3
+    def count_cuts(self):
+        if self.sample_input:
+            self.collection = sorted(self.collection, key=len, reverse=True)
+
+            sample_input = self.sample_input
+            count = 0
+            deducted = []
+            print("Search: ", self.collection)
+            for n in self.collection:
+                if n in sample_input:
+                    count += 1
+                    deducted.append(n)
+                    sample_input = sample_input.replace(n, "")
+
+            return f"{count-1} // {' | '.join(deducted)}"
+        return None
+
     def get_result(self):
-        print("Level One: ", self.validate())
-        print("Level Two: ", self.longest_string())
+        print("Level 1: ", self.validate())
+        print("Level 2: ", self.longest_string())
+        print("Level 3: ", self.count_cuts())
 
 if __name__ == '__main__':
     Palindrome(input("INPUT: ")).get_result()
